@@ -1,0 +1,6 @@
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    compile project(':tender-model')
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+}

@@ -1,11 +1,39 @@
 server:
-  port: 8982
+  port: 8080
 spring:
   datasource:
     driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=MSSQLServer
+    url: jdbc:h2:~/tenderDatabase:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=MSSQLServer;AUTO_SERVER=TRUE
     username: REPLACE_ME
     password:
-  jpa:
-    hibernate:
-      ddl-auto: validate
+impresssol:
+  broadband:
+    tender:
+      security:
+        admin-name: tenderAdmin
+        admin-password: tenderAdmin
+        webservice-name: tenderWS
+        webservice-password: tenderWS
+        kam-name: kam
+        kam-password: kam
+      repository:
+        endpoint: api/repositories
+#      Logging
+logging:
+  level:
+    org.springframework.web.filter.CommonsRequestLoggingFilter: DEBUG
+    org.springframework.web: DEBUG
+    org.springframework.ws.client.MessageTracing.sent: DEBUG
+    org.springframework.ws.server.MessageTracing.sent: DEBUG
+    org.springframework.ws.client.MessageTracing.received: TRACE
+    org.springframework.ws.server.MessageTracing.received: TRACE
+  file: log/broadband-tender-demo.log
+#  Health Monitoring
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: "*"

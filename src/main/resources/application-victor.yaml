@@ -1,9 +1,20 @@
 spring:
   jpa:
     properties:
+      #      Activate Just if you want to create the Schema from the Entitys
+      #      javax:
+      #        persistence:
+      #          schema-generation:
+      #            create-source: metadata
+      #            scripts:
+      #              action: create
+      #              create-target: schema.sql
+      #      Normally jasypt would be used for encryption and the usernames and Password of the users should be inside the Database or LDAP
       hibernate:
         jdbc:
           batch_size: 2000
           order_inserts: true
           order_update: true
           generate_statistics: true
+  profiles:
+    include: seed-auto-apply

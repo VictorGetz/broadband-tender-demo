@@ -1,6 +1,3 @@
-apply plugin: 'idea'
-
-
 buildscript {
     ext {
         springBootVersion = '2.1.2.RELEASE'
@@ -13,6 +10,14 @@ buildscript {
     }
 }
 
+plugins {
+    id "com.palantir.docker" version "0.21.0"
+}
+
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'maven-publish'
+
 repositories {
     mavenCentral()
 }
@@ -22,21 +27,14 @@ allprojects {
     version '0.0.1-SNAPSHOT'
 
     apply plugin: 'java'
-    apply plugin: 'org.springframework.boot'
     apply plugin: 'io.spring.dependency-management'
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
 
     compileJava.options.encoding = 'UTF-8'
-
-    springBoot {
-        mainClassName = 'com.impresssol.broadband.server.Application'
-    }
 }
 
-
 subprojects {
-
     dependencies {
         testCompile('org.springframework.boot:spring-boot-starter-test')
     }
@@ -44,5 +42,43 @@ subprojects {
     repositories {
         mavenCentral()
     }
-
 }
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    runtimeOnly 'org.springframework.boot:spring-boot-devtools'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+}
+
+
+// Create Docker Image from Dockerfile and the Spring Boot Jar
+task unpack(type: Copy) {
+    dependsOn bootJar
+    from(tasks.bootJar.outputs.files.singleFile)
+    into("build/dependency")
+}
+docker {
+    name "impresssoldockerregistry.azurecr.io/broadband-tender-demo:${version}"
+    copySpec.from(tasks.unpack.outputs).into("dependency")
+    buildArgs(['DEPENDENCY': "dependency"])
+}
+
+
+// Publish the resulting Artifact to the Repository (we do not have a Repository currently)
+publishing {
+    publications {
+        bootJava(MavenPublication) {
+            artifact bootJar
+        }
+    }
+    repositories {
+        maven {
+            url 'https://RepoReplaceMeLater.com'
+        }
+    }
+}
+
+

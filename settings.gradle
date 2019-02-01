@@ -1,0 +1,4 @@
+rootProject.name = 'tender'
+include 'tender-model'
+include 'tender-server'
+

@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,7 +26,7 @@ public class SeedServiceEndpoint {
 	private final PricingItemMasterDataImportEndpoint pricingItemMasterDataImportEndpoint;
 	private final SeedDataFactory seedDataFactory;
 
-	@PostMapping("projects")
+	@GetMapping("projects")
 	public Project seedDummyData() {
 		Project project = seedDataFactory.createProject();
 		log.info("Creating Seed Project data=" + project.toString());
@@ -34,7 +34,7 @@ public class SeedServiceEndpoint {
 		return project;
 	}
 
-	@PostMapping("prices")
+	@GetMapping("prices")
 	public ResponseEntity<Object> seedPrices() {
 		Map<PricingItemTypeEnum, BigDecimal> prices = seedDataFactory.createPrices();
 		log.info("Creating Seed Prices data=" + prices.toString());

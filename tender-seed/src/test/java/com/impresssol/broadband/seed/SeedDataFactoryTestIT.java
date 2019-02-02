@@ -20,7 +20,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.impresssol.broadband.data.entities.pricing.PricingItemTypeEnum;
 
 @RunWith(SpringRunner.class)
-public class SeedDataFactoryTest {
+public class SeedDataFactoryTestIT {
 
 	@InjectMocks
 	private SeedDataFactory sut;

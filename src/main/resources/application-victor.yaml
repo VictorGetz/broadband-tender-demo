@@ -1,15 +1,15 @@
+server:
+  port: 8080
 spring:
   profiles:
     include: seed-auto-apply
   datasource:
     driver-class-name: org.h2.Driver
-    url: jdbc:h2:~/tenderDatabase5:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=MSSQLServer;AUTO_SERVER=TRUE
+    url: jdbc:h2:~/tenderDatabase7:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=MSSQLServer;AUTO_SERVER=TRUE
     username: victor
     password:
-  jpa:
-    hibernate:
-      ddl-auto: validate
-      #      Activate Just if you want to create the Schema from the Entitys
+    #      Activate Just if you want to create the Schema from the Entitys
+#  jpa:
 #    properties:
 #      javax:
 #        persistence:

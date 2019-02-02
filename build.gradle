@@ -24,12 +24,12 @@ repositories {
 
 allprojects {
     group 'com.impresssol.broadband'
-    version '0.0.1-SNAPSHOT'
+    version '0.0.4-SNAPSHOT'
 
     apply plugin: 'java'
     apply plugin: 'io.spring.dependency-management'
-    sourceCompatibility = JavaVersion.VERSION_1_10
-    targetCompatibility = JavaVersion.VERSION_1_10
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
 
     compileJava.options.encoding = 'UTF-8'
 
@@ -61,19 +61,22 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-data-jpa")
     compile 'org.springframework.data:spring-data-rest-hal-browser'
     compile 'org.flywaydb:flyway-core'
+    compile 'com.microsoft.sqlserver:mssql-jdbc:6.4.0.jre8'
     compile project(':tender-model')
     compile project(':tender-seed')
+    compile project(':tender-service')
 }
 
 
-// Create Docker Image from Dockerfile and the Spring Boot Jar
+// Create Docker Image PegasusGasDockerRegistryfrom Dockerfile and the Spring Boot Jar
 task unpack(type: Copy) {
     dependsOn bootJar
     from(tasks.bootJar.outputs.files.singleFile)
     into("build/dependency")
 }
 docker {
-    name "impresssoldockerregistry.azurecr.io/broadband-tender-demo:${version}"
+//    name "impresssoldockerregistry.azurecr.io/broadband-tender-demo:${version}"
+    name "pegasusgasdockerregistry.azurecr.io/broadband-tender-demo:${version}"
     copySpec.from(tasks.unpack.outputs).into("dependency")
     buildArgs(['DEPENDENCY': "dependency"])
 }

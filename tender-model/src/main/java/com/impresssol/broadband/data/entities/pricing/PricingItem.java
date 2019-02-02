@@ -1,24 +1,23 @@
-package com.impresssol.broadband.data.entities.district;
+package com.impresssol.broadband.data.entities.pricing;
 
-import javax.persistence.CascadeType;
+import java.math.BigDecimal;
+
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 @Table
@@ -29,29 +28,18 @@ import lombok.ToString;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class LocalAuthorityDistrict {
+public class PricingItem {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 
 	@Column
-	private String name;
-
-	@Column
 	@Enumerated(EnumType.STRING)
-	private LocalAuthorityDistrictTypeEnum type;
+	private PricingItemTypeEnum pricingItemType;
 
+	@Basic
 	@Column
-	private String districtKey;
-
-	@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private ContactPerson contactPerson;
-
-	@Column
-	private String district;
-
-	@Column
-	private String governmentDistrict;
+	@Setter
+	private BigDecimal price;
 }

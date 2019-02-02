@@ -31,10 +31,10 @@ public class ProjectMasterData {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 
-	@Column(nullable = false)
+	@Column
 	private String developmentAreaName;
 
-	@Column(nullable = false)
+	@Column
 	private String networkOperator;
 
 }

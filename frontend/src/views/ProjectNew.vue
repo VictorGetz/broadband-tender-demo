@@ -22,7 +22,6 @@
 
       created() {
           this.resetProject()
-          console.log(this.$route)
       }
   }
 </script>

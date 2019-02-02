@@ -47,9 +47,6 @@
             ]),
 
             handleEdit(index, row) {
-                console.log(index, row);
-
-
                 this.$router.push({
                     name: 'project.edit',
                     params: {
@@ -67,8 +64,6 @@
             },
 
             handleDelete(index, row) {
-                console.log(index, row);
-
                 this.loading = true
                 this.api.project.deleteProject(row.id)
                     .then(() => {

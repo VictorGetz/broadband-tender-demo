@@ -39,7 +39,7 @@ public class SeedServiceEndpoint {
 		Map<PricingItemTypeEnum, BigDecimal> prices = seedDataFactory.createPrices();
 		log.info("Creating Seed Prices data=" + prices.toString());
 		pricingItemMasterDataImportEndpoint.updatePrices(prices);
-		return ResponseEntity.accepted().build();
+		return ResponseEntity.accepted().body(prices.toString());
 	}
 
 }

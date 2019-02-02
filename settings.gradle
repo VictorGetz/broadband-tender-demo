@@ -1,4 +1,5 @@
 rootProject.name = 'tender'
 include 'tender-model'
 include 'tender-seed'
+include 'tender-service'
 

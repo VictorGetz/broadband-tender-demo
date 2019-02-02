@@ -1,5 +1,7 @@
 package com.impresssol.broadband.server.security;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -16,14 +18,14 @@ public class ServerCredentials {
 
 	String adminName;
 	String adminPassword;
-	Set<ServerRole> adminRoles = Set.of(ServerRole.ADMIN_ROLE, ServerRole.WEBSERVICE_ROLE, ServerRole.KAM);
+	List<ServerRole> adminRoles = Arrays.asList(ServerRole.ADMIN_ROLE, ServerRole.WEBSERVICE_ROLE, ServerRole.KAM);
 
 	String webserviceName;
 	String webservicePassword;
-	Set<ServerRole> webserviceRole = Set.of(ServerRole.WEBSERVICE_ROLE);
+	List<ServerRole> webserviceRole = Arrays.asList(ServerRole.WEBSERVICE_ROLE);
 
 
 	String kamName;
 	String kamPassword;
-	Set<ServerRole> kamRole = Set.of(ServerRole.KAM);
+	List<ServerRole> kamRole = Arrays.asList(ServerRole.KAM);
 }

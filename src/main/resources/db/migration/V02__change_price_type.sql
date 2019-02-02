@@ -1,0 +1,1 @@
+alter table pricing_detail ALTER COLUMN price numeric(19,2);

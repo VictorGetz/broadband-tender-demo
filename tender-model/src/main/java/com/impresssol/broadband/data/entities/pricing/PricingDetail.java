@@ -47,6 +47,6 @@ public class PricingDetail {
 	private String description;
 
 	@Basic
-	@Column(precision = 20, scale = 5)
+	@Column
 	private BigDecimal price;
 }

@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 import lombok.RequiredArgsConstructor;
 
@@ -16,10 +17,12 @@ import lombok.RequiredArgsConstructor;
 public class ServerSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	private final ServerCredentials serverCredentials;
+	private final CorsFilter corsFilter;
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf().disable()
+		http.addFilterBefore(corsFilter, BasicAuthenticationFilter.class)
+				.csrf().disable()
 				.authorizeRequests()
 				.antMatchers("/actuator/health").permitAll()
 				.antMatchers("/actuator/*").hasRole(ServerRole.ADMIN_ROLE.toString())

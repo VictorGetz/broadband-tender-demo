@@ -35,12 +35,12 @@ public class Project {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 
-	@OneToOne(optional = false, cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL)
 	private ProjectMasterData projectMasterData;
 
-	@OneToOne(optional = false, cascade = CascadeType.PERSIST)
+	@OneToOne(cascade = CascadeType.PERSIST)
 	private LocalAuthorityDistrict localAuthorityDistrict;
 
-	@OneToOne(optional = false, cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL)
 	private PricingMasterData pricingMasterData;
 }

@@ -11,30 +11,38 @@ Develop a Spring Boot Demo Application within a day.
 * WebserviceUser (is allowed to access the api)
 * Key Account Manager (is allowed to access the UI)
 # Endpoints
-* http://tender-demo.azurewebsites.net/
-* Creating Dummy Entries via REST Interface
-    * [Project](http://tender-demo.azurewebsites.net/api/seed/projects)
-    * [Prices](http://tender-demo.azurewebsites.net/api/seed/prices)
-* Access General Data via REST
-    * [All Projects](http://tender-demo.azurewebsites.net/api/projects)
-    * [HAL Browser](http://tender-demo.azurewebsites.net/api/repositories/browser/index.html#/api/repositories)
-* Access Project Data via REST
-    * Create, Read, Update, Delete Operations (http://tender-demo.azurewebsites.net/api/projects)
-    * Specific project http://tender-demo.azurewebsites.net/api/projects/$projectId (for example 23)
-* Access Pricing Data via REST 
-    * [Get Current Prices](http://localhost:8080/api/masterdata/pricing)
-    * Calculate prices for specific project http://localhost:8080/api/pricingMasterData/calculateAndUpdateSum/$projectId (for example 23)
-    * Update prices for all project with masterdata http://localhost:8080/api/masterdata/pricing (Post Request)
-        *   ```json
-                {
-                  "ACCESS_EMPTY_PIPES": 1080,
-                  "DEBUNDLED_ACCESS": 2000,
-                  "BITSTREAM_ACCESS": 2300,
-                  "ACCESSDARKFIBER": 4300,
-                  "SHARED_USE": 9600,
-                  "BACKHAULNET_WORKACCESS": 2030
-                }
-            ```
+* http://tender-demo.azurewebsites.net/ (Key Account Manager Access required)
+* Interface Endpoints
+    * Creating Dummy Entries via REST Interface
+        * [Project](http://tender-demo.azurewebsites.net/api/seed/projects)
+        * [Prices](http://tender-demo.azurewebsites.net/api/seed/prices)
+    * Access General Data via REST
+        * [All Projects](http://tender-demo.azurewebsites.net/api/projects)
+        * [HAL Browser](http://tender-demo.azurewebsites.net/api/repositories/browser/index.html#/api/repositories)
+    * Access Project Data via REST
+        * Create, Read, Update, Delete Operations (http://tender-demo.azurewebsites.net/api/projects)
+        * Specific project http://tender-demo.azurewebsites.net/api/projects/$projectId (for example 23)
+    * Access Pricing Data via REST 
+        * [Get Current Prices](http://localhost:8080/api/masterdata/pricing)
+        * Calculate prices for specific project http://localhost:8080/api/pricingMasterData/calculateAndUpdateSum/$projectId (for example 23)
+        * Update prices for all project with masterdata http://localhost:8080/api/masterdata/pricing (Post Request)
+            *   ```json
+                    {
+                      "ACCESS_EMPTY_PIPES": 1080,
+                      "DEBUNDLED_ACCESS": 2000,
+                      "BITSTREAM_ACCESS": 2300,
+                      "ACCESSDARKFIBER": 4300,
+                      "SHARED_USE": 9600,
+                      "BACKHAULNET_WORKACCESS": 2030
+                    }
+                ```
+* Admin Endpoints
+    * [Show Logs](http://tender-demo.azurewebsites.net/actuator/logfile)
+    * [See if the application is available](https://tender-demo.azurewebsites.net/actuator/health)
+    * [See detailed information about past HTTP connections](https://tender-demo.azurewebsites.net/actuator/httptrace)
+    * [See server configuration](https://tender-demo.azurewebsites.net/actuator/configprops)
+    * [Details about Database Migrations](https://tender-demo.azurewebsites.net/actuator/flyway)
+    * ...
 ### Tech Stack
 
 Broadband Tender Demo uses a number of technologies to work properly:
@@ -112,11 +120,11 @@ Broadband Tender Demo is now available under port 8080
 * tender-seed - contains all items regarding seed dummy test data like price masterdata or projects 
 ## Tests
 * Systemtests
-[ServerSecurity](https://github.com/VictorGetz/broadband-tender-demo/blob/master/src/test/java/com/impresssol/broadband/server/security/ServerSecurityConfigTestIT.java) (Validates the acces permissions for the roles KeyAccountManager, Admin and WebserviceUser)
+    * [ServerSecurity](https://github.com/VictorGetz/broadband-tender-demo/blob/master/src/test/java/com/impresssol/broadband/server/security/ServerSecurityConfigTestIT.java) (Validates the acces permissions for the roles KeyAccountManager, Admin and WebserviceUser)
 * Integrationtests
-[Seed](https://github.com/VictorGetz/broadband-tender-demo/blob/master/tender-seed/src/test/java/com/impresssol/broadband/seed/SeedDataFactoryTestIT.java) (Validates all the informations from the seed service)
+    * [Seed](https://github.com/VictorGetz/broadband-tender-demo/blob/master/tender-seed/src/test/java/com/impresssol/broadband/seed/SeedDataFactoryTestIT.java) (Validates all the informations from the seed service)
 * Unittests
-[PriceCalculation](https://github.com/VictorGetz/broadband-tender-demo/blob/master/tender-service/src/test/java/com/impresssol/broadband/service/calculation/PriceCalculationServiceTest.java) (Validates the results from the calculationservice and checks how it behaves with unexpected values)
+    * [PriceCalculation](https://github.com/VictorGetz/broadband-tender-demo/blob/master/tender-service/src/test/java/com/impresssol/broadband/service/calculation/PriceCalculationServiceTest.java) (Validates the results from the calculationservice and checks how it behaves with unexpected values)
 ### Todos
 
  - Write More Tests

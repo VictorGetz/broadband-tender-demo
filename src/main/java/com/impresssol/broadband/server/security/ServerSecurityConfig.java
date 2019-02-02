@@ -27,7 +27,7 @@ public class ServerSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/actuator/health").permitAll()
 				.antMatchers("/actuator/*").hasRole(ServerRole.ADMIN_ROLE.toString())
 				.antMatchers("/api/*").hasRole(ServerRole.WEBSERVICE_ROLE.toString())
-				.antMatchers("/*").authenticated()
+				.antMatchers("/*").hasRole(ServerRole.KAM.toString())
 				.anyRequest().authenticated()
 				.and()
 				.httpBasic();
@@ -43,7 +43,11 @@ public class ServerSecurityConfig extends WebSecurityConfigurerAdapter {
 				.and()
 				.withUser(serverCredentials.getWebserviceName())
 				.password(passwordEncoder().encode(serverCredentials.getWebservicePassword()))
-				.roles(ServerRole.WEBSERVICE_ROLE.toString());
+				.roles(ServerRole.WEBSERVICE_ROLE.toString())
+				.and()
+				.withUser(serverCredentials.getKamName())
+				.password(passwordEncoder().encode(serverCredentials.getKamPassword()))
+				.roles(ServerRole.KAM.toString());
 	}
 
 	@Bean

@@ -1,0 +1,1 @@
+alter table project_master_data ADD project_type varchar(255);

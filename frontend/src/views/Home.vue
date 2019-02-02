@@ -3,52 +3,84 @@
 
     <el-button type="primary" @click="$router.push({name: 'project.new'})">Neues Ausbauprojekt</el-button>
     <el-table
-            :data="tableData"
-            style="width: 100%">
-
+            v-loading="loading"
+            :data="projects">
       <el-table-column
-              prop="municipality"
+              prop="localAuthorityDistrict.name"
               label="Kommune"
               width="210">
       </el-table-column>
+
       <el-table-column
-              fixed
-              prop="date"
-              label="Datum"
-              width="150">
-      </el-table-column>
-      <el-table-column
-              prop="developmentArea"
+              prop="projectMasterData.developmentAreaName"
               label="Erschließungsgebiet"
               width="200">
       </el-table-column>
       <el-table-column
-              prop="provider"
+              prop="projectMasterData.networkOperator"
               label="Ausbauender Netzbetreiber"
               width="210">
       </el-table-column>
-
       <el-table-column
-              fixed="right"
-              label="Aktionen"
-              width="120">sdfg
-        <el-button @click="handleClick" type="text" size="small">Detail</el-button>
-        <el-button type="text" size="small">Edit</el-button>
+              label="Aktionen">
+        <template slot-scope="scope">
+          <el-button
+                  size="mini"
+                  @click="handleEdit(scope.$index, scope.row)">Bearbeiten</el-button>
+          <el-button
+                  size="mini"
+                  type="danger"
+                  @click="handleDelete(scope.$index, scope.row)">Löschen</el-button>
+        </template>
       </el-table-column>
     </el-table>
   </div>
 </template>
 
 <script>
+  import {mapGetters, mapActions} from 'vuex'
+
     export default {
         methods: {
-            handleClick() {
-                console.log('click');
-            }
+            ...mapActions([
+                'getProjectList'
+            ]),
+
+            handleEdit(index, row) {
+                console.log(index, row);
+
+
+                this.$router.push({
+                    name: 'project.edit',
+                    params: {
+                        id: row.id
+                    }
+                })
+            },
+
+            load() {
+                this.loading = true
+                this.getProjectList()
+                    .then(() => {
+                        this.loading = false
+                    })
+            },
+
+            handleDelete(index, row) {
+                console.log(index, row);
+
+                this.loading = true
+                this.api.project.deleteProject(row.id)
+                    .then(() => {
+                        this.load()
+                    })
+
+            },
         },
 
         data() {
             return {
+                loading: true,
                 tableData: [{
                     date: '2019-01-01',
                     developmentArea: 'Gewerbegebiet Pessenbach',
@@ -58,8 +90,14 @@
             }
         },
 
+        computed: {
+            ...mapGetters([
+                'projects'
+            ]),
+        },
+
         created() {
-            this.api.project.getProjectsList().then(response => console.log(response))
+            this.load()
         }
     }
 </script>

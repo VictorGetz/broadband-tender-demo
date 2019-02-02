@@ -4,7 +4,7 @@ import ElementUI from 'element-ui';
 import '@/scss/element.scss'
 import App from './App.vue'
 import router from './router'
-import store from './store'
+import store from './store/'
 import api from './mixins/api'
 
 Vue.config.productionTip = false

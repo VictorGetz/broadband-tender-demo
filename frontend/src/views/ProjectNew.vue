@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Neu</h1>
+    <h1>Neues Projekt</h1>
     <project-form></project-form>
   </div>
 </template>
@@ -10,6 +10,10 @@
   export default {
       components: {
           ProjectForm
+      },
+
+      created() {
+        console.log(this.$route)
       }
   }
 </script>

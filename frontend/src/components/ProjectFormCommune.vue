@@ -1,8 +1,10 @@
 <template>
-    <el-form ref="form" :model="form" label-position="left" label-width="170px">
+    <pre  v-if="true">{{form}}</pre>
+    <el-form v-else ref="form" :model="form" label-position="left" label-width="170px">
+
         <el-form-item label="Kommune">
             <el-col :span="11">
-                <el-input v-model="form.municipality" placeholder="Name der Kommune"></el-input>
+                <el-input v-model="form.localAuthorityDistrict.name" placeholder="Name der Kommune"></el-input>
             </el-col>
             <el-col class="line" :span="2">&nbsp;</el-col>
             <el-col :span="11">
@@ -40,13 +42,23 @@
         name: 'ProjectFormCommune',
 
         props: {
-            form: {},
+            project: {},
+        },
+
+        data() {
+            return {
+                form: {},
+            }
         },
 
         methods: {
             proceed() {
                 this.$emit('proceed')
             }
-        }
+        },
+
+        created() {
+            this.form = this.project
+        },
     }
 </script>

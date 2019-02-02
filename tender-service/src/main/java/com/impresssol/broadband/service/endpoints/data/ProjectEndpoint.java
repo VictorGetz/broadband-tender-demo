@@ -1,4 +1,4 @@
-package com.impresssol.broadband.service;
+package com.impresssol.broadband.service.endpoints.data;
 
 import java.net.URI;
 import java.util.List;
@@ -38,7 +38,7 @@ public class ProjectEndpoint {
 	}
 
 	@PostMapping("/projects")
-	public ResponseEntity<Project> createProject(@RequestBody Project project) {
+	public ResponseEntity<Object> createProject(@RequestBody Project project) {
 		Project savedProject = projectRepository.save(project);
 
 		URI location = ServletUriComponentsBuilder
@@ -73,7 +73,7 @@ public class ProjectEndpoint {
 	}
 
 	@PutMapping("/projects/{id}")
-	public ResponseEntity<Object> updateStudent(@RequestBody Project project, @PathVariable long id) {
+	public ResponseEntity<Object> updateProject(@RequestBody Project project, @PathVariable long id) {
 		if (!projectRepository.findById(id).isPresent()) {
 			return ResponseEntity.notFound().build();
 		}

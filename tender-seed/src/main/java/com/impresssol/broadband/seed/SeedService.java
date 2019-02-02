@@ -2,6 +2,8 @@ package com.impresssol.broadband.seed;
 
 import static com.impresssol.broadband.data.entities.pricing.PricingDetailTypeEnum.FTTB_FTTH;
 import static com.impresssol.broadband.data.entities.pricing.PricingDetailTypeEnum.FTTC;
+import static com.impresssol.broadband.data.entities.pricing.PricingItemTypeEnum.ACCESS_EMPTY_PIPES;
+import static com.impresssol.broadband.data.entities.pricing.PricingItemTypeEnum.BACKHAULNET_WORKACCESS;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
@@ -18,6 +20,7 @@ import com.impresssol.broadband.data.entities.district.LocalAuthorityDistrict;
 import com.impresssol.broadband.data.entities.district.LocalAuthorityDistrictTypeEnum;
 import com.impresssol.broadband.data.entities.pricing.PricingDetail;
 import com.impresssol.broadband.data.entities.pricing.PricingDetailTypeEnum;
+import com.impresssol.broadband.data.entities.pricing.PricingItem;
 import com.impresssol.broadband.data.entities.pricing.PricingMasterData;
 import com.impresssol.broadband.data.repo.ProjectRepository;
 
@@ -28,7 +31,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class SeedService {
 
-	private static final double DUMMY_PRICE = 1000.50d;
 
 	@Autowired
 	private ProjectRepository projectRepository;
@@ -60,10 +62,22 @@ public class SeedService {
 	}
 
 	private PricingDetail createPricingDetail(PricingDetailTypeEnum pricingDetailType) {
-		return PricingDetail.builder()
-				.price(new BigDecimal(DUMMY_PRICE))
+		PricingDetail pricingDetail = PricingDetail.builder()
 				.pricingDetailType(pricingDetailType)
 				.build();
+
+		PricingItem accessEmptyPipes = PricingItem.builder()
+				.price(new BigDecimal(5000.20d))
+				.pricingItemType(ACCESS_EMPTY_PIPES)
+				.build();
+
+		PricingItem backHoulNetWorkAccess = PricingItem.builder()
+				.price(new BigDecimal(1000))
+				.pricingItemType(BACKHAULNET_WORKACCESS)
+				.build();
+		pricingDetail.getPricingItems().add(backHoulNetWorkAccess);
+		pricingDetail.getPricingItems().add(accessEmptyPipes);
+		return pricingDetail;
 	}
 
 	private LocalAuthorityDistrict createLocalAuthorityDistrict() {

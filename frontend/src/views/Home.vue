@@ -8,18 +8,18 @@
       <el-table-column
               prop="localAuthorityDistrict.name"
               label="Kommune"
-              width="210">
+              width="250">
       </el-table-column>
 
       <el-table-column
               prop="projectMasterData.developmentAreaName"
               label="Erschließungsgebiet"
-              width="200">
+              width="250">
       </el-table-column>
       <el-table-column
               prop="projectMasterData.networkOperator"
               label="Ausbauender Netzbetreiber"
-              width="210">
+              width="250">
       </el-table-column>
       <el-table-column
               label="Aktionen">

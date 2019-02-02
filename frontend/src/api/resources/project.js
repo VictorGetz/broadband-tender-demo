@@ -6,8 +6,8 @@ async function getProjectsList() {
     return data
 }
 
-async function createProject() {
-    const {data} = await axios.post('/projects')
+async function createProject(project) {
+    const {data} = await axios.post('/projects', project)
 
     return data
 }
@@ -18,14 +18,14 @@ async function getProject(id) {
     return data
 }
 
-async function updateProject(id) {
-    const {data} = await axios.put('/project/' + id)
+async function updateProject(project) {
+    const {data} = await axios.put('/projects/' + project.id, project)
 
     return data
 }
 
 async function deleteProject(id) {
-    const {data} = await axios.delete('/project/' + id)
+    const {data} = await axios.delete('/projects/' + id)
 
     return data
 }

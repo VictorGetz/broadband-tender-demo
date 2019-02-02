@@ -1,9 +1,6 @@
 <template>
-    <!--
-    <ProjectFormCommune v-if="loaded && isStepCommune" v-loading="loading" :form="form" :project="project" @proceed="proceedToStep2"></ProjectFormCommune>
-    <ProjectFormInfo v-else-if="loaded && isStepProjectInfo" v-loading="loading" :form="form" :project="project" @proceed="proceedToStep2" @change-type="resetWholesaleProducts"></ProjectFormInfo>
-    -->
-    <pre>{{project}}</pre>
+    <ProjectFormCommune v-if="loaded && isStepCommune" v-loading="loading" @proceed="proceedToStep2"></ProjectFormCommune>
+    <ProjectFormInfo v-else-if="loaded && isStepProjectInfo" v-loading="loading" @proceed="save"></ProjectFormInfo>
 </template>
 
 <script>
@@ -14,7 +11,7 @@
     export default {
         props: {
             id: {
-                type: String
+                required: false
             },
         },
 
@@ -50,7 +47,6 @@
                     district:'',
                     region:'',
                     contactPerson:'',
-
 
                     fttc: {
                         accessEmptyPipes: false,
@@ -92,44 +88,27 @@
         methods: {
 
             ...mapActions([
-                'getProject'
+                'getProject',
+                'storeProject',
             ]),
-            proceedToStep2() {
+
+            proceedToStep2(project) {
+                this.storeProject(project)
                 this.step = 2
             },
 
-            resetWholesaleProducts() {
-                return;
-                this.form.fttc.accessEmptyPipes = false
-                this.form.fttc.debundledAccess = false
-                this.form.fttc.bitstreamAccess = false
-
-                this.form.fttb_ftth.accessEmptyPipes = false
-                this.form.fttb_ftth.accessDarkFiber = false
-                this.form.fttb_ftth.debundledAccess = false
-                this.form.fttb_ftth.bitstreamAccess = false
-
-                this.form.cable.accessEmptyPipes = false
-                this.form.cable.bitstreamAccess = false
-
-                this.form.passiveNetInfrastructure.accessEmptyPipes = false
-                this.form.passiveNetInfrastructure.accessDarkFiber = false
-                this.form.passiveNetInfrastructure.debundledAccess = false
-
-                this.form.mobileNetworks.bitstreamAccess = false
-                this.form.mobileNetworks.sharedUse = false
-                this.form.mobileNetworks.backHaulNetworkAccess = false
-
-                this.form.satellitePlatform.bitstreamAccess = false
+            save(project) {
+                const endpoint = project.id ? this.api.project.updateProject : this.api.project.createProject
+                endpoint(project).then(() => {
+                    this.$router.push({name: 'home'})
+                })
             }
         },
 
 
         async created() {
-            this.form = this.project
             if(this.id) {
-                const project = await this.getProject(this.id)
-                this.form = project
+                await this.getProject(this.id)
             }
             this.loading = false
             //this.resetWholesaleProducts()

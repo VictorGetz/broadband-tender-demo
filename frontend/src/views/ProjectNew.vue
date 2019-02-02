@@ -7,13 +7,22 @@
 <script>
   import ProjectForm from '../components/ProjectForm'
 
+  import {mapActions} from 'vuex'
+
   export default {
       components: {
           ProjectForm
       },
 
+      methods: {
+          ...mapActions([
+              'resetProject'
+          ]),
+      },
+
       created() {
-        console.log(this.$route)
+          this.resetProject()
+          console.log(this.$route)
       }
   }
 </script>

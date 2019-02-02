@@ -11,10 +11,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Component;
 
 import com.impresssol.broadband.data.entities.Project;
 import com.impresssol.broadband.data.entities.ProjectMasterData;
@@ -26,32 +23,16 @@ import com.impresssol.broadband.data.entities.pricing.PricingDetailTypeEnum;
 import com.impresssol.broadband.data.entities.pricing.PricingItem;
 import com.impresssol.broadband.data.entities.pricing.PricingItemTypeEnum;
 import com.impresssol.broadband.data.entities.pricing.PricingMasterData;
-import com.impresssol.broadband.data.repo.ProjectRepository;
-import com.impresssol.broadband.service.endpoints.masterdata.PricingItemMasterDataImportEndpoint;
 
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+@Component
+public class SeedDataFactory {
 
-@RestController
-@RequestMapping("api/seed")
-@Slf4j
-@RequiredArgsConstructor
-public class SeedService {
-
-	private final ProjectRepository projectRepository;
-	private final PricingItemMasterDataImportEndpoint pricingItemMasterDataImportEndpoint;
-
-	@PostMapping("projects")
-	public Project seedDummyData() {
-		Project project = Project.builder()
+	Project createProject() {
+		return Project.builder()
 				.localAuthorityDistrict(createLocalAuthorityDistrict())
 				.pricingMasterData(createPricingMasterData())
 				.projectMasterData(createProjectMasterData())
 				.build();
-
-		log.info("Creating Seed Project data=" + project.toString());
-		projectRepository.save(project);
-		return project;
 	}
 
 	private ProjectMasterData createProjectMasterData() {
@@ -103,19 +84,12 @@ public class SeedService {
 				.build();
 	}
 
-
-	@PostMapping("prices")
-	public ResponseEntity<Object> seedPrices() {
-		log.info("Creating Seed Prices");
-		Map<PricingItemTypeEnum, BigDecimal> prices = Arrays.stream(PricingItemTypeEnum.values())
-				.collect(Collectors.toMap(pricingItemTypeEnum -> pricingItemTypeEnum, x -> generateRandomValue(100000)));
-		pricingItemMasterDataImportEndpoint.updatePrices(prices);
-		return ResponseEntity.accepted().build();
+	Map<PricingItemTypeEnum, BigDecimal> createPrices() {
+		return Arrays.stream(PricingItemTypeEnum.values())
+				.collect(Collectors.toMap(pricingItemTypeEnum -> pricingItemTypeEnum, x -> generateRandomValue()));
 	}
 
-
-	private BigDecimal generateRandomValue(int upperRange) {
-		return new BigDecimal(new Random().nextInt(upperRange));
+	private BigDecimal generateRandomValue() {
+		return new BigDecimal(new Random().nextInt(100000));
 	}
-
 }

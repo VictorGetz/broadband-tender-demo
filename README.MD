@@ -1,30 +1,40 @@
 # Broadband Tender Demo
 
-[![N|Solid](https://cldup.com/dTxpPi9lDf.thumb.png)](https://nodesource.com/products/nsolid)
-
 [![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
 
-Broadband Tender Demo is the Backend Project for a Web Application which 
-is a cloud-enabled, mobile-ready, offline-storage, AngularJS powered HTML5 Markdown editor.
-
-  - Type some Markdown on the left
-  - See HTML in the right
-  - Magic
+TODO
 
 # Goal
 Develop a Spring Boot Demo Application within a day.
-
-# New Features!
-
-  - Import a HTML file and watch it magically convert to Markdown
-  - Drag and drop images (requires your Dropbox account be linked)
-
-
-You can also:
-  - Import and save files from GitHub, Dropbox, Google Drive and One Drive
-  - Drag and drop markdown and HTML files into Dillinger
-  - Export documents as Markdown, HTML and PDF
-
+# Roles
+* Admin (is allowed to access everything and to configure the server)
+* WebserviceUser (is allowed to access the api)
+* Key Account Manager (is allowed to access the UI)
+# Endpoints
+* http://tender-demo.azurewebsites.net/
+* Creating Dummy Entries via REST Interface
+    * [Project](http://tender-demo.azurewebsites.net/api/seed/projects)
+    * [Prices](http://tender-demo.azurewebsites.net/api/seed/prices)
+* Access General Data via REST
+    * [All Projects](http://tender-demo.azurewebsites.net/api/projects)
+    * [HAL Browser](http://tender-demo.azurewebsites.net/api/repositories/browser/index.html#/api/repositories)
+* Access Project Data via REST
+    * Create, Read, Update, Delete Operations (http://tender-demo.azurewebsites.net/api/projects)
+    * Specific project http://tender-demo.azurewebsites.net/api/projects/$projectId (for example 23)
+* Access Pricing Data via REST 
+    * [Get Current Prices](http://localhost:8080/api/masterdata/pricing)
+    * Calculate prices for specific project http://localhost:8080/api/pricingMasterData/calculateAndUpdateSum/$projectId (for example 23)
+    * Update prices for all project with masterdata http://localhost:8080/api/masterdata/pricing (Post Request)
+        *   ```json
+                {
+                  "ACCESS_EMPTY_PIPES": 1080,
+                  "DEBUNDLED_ACCESS": 2000,
+                  "BITSTREAM_ACCESS": 2300,
+                  "ACCESSDARKFIBER": 4300,
+                  "SHARED_USE": 9600,
+                  "BACKHAULNET_WORKACCESS": 2030
+                }
+            ```
 ### Tech Stack
 
 Broadband Tender Demo uses a number of technologies to work properly:
@@ -67,108 +77,47 @@ $ sdk install gradle
 # Test Gradle Version
 $ gradle -version
 ```
-Download and install Intellij and Docker 
+Download and install Intellij and Docker
+Last step is checkout the Project and mark the project as a gradle project
 
-### Development
-
-Want to contribute? Great!
-
-Dillinger uses Gulp + Webpack for fast developing.
-Make a change in your file and instantanously see your updates!
-
-Open your favorite Terminal and run these commands.
-
-First Tab:
-```sh
-$ node app
-```
-
-Second Tab:
-```sh
-$ gulp watch
-```
-
-(optional) Third:
-```sh
-$ karma test
-```
-#### Building for source
-For production release:
-```sh
-$ gulp build --prod
-```
-Generating pre-built zip archives for distribution:
-```sh
-$ gulp build dist --prod
-```
 ### Docker
 Broadband Tender Demo is very easy to install and deploy in a Docker container.
-
 First login into the private docker repository
 ```sh
 # Replace privateRepository with your Repository
 $ docker login privateRepository
 ```
 Now build the Container with Intellij or console
+Intellij:
+![N|Solid](https://github.com/VictorGetz/broadband-tender-demo/blob/master/documentation/installation/GradleDockerBuild.png?raw=true)
+console
+```sh
+$ gradle clean dockerPush
+```
+Now you have build the whole project (Front and Backend) and pushed the docker image to the repository
 
-By default, the Docker will expose port 8080, so change this within the Dockerfile if necessary. When ready, simply use the Dockerfile to build the image.
+To start the container with a h2 database execute the following command:
 
 ```sh
-cd dillinger
-docker build -t joemccann/dillinger:${package.json.version} .
-```
-This will create the dillinger image and pull in the necessary dependencies. Be sure to swap out `${package.json.version}` with the actual version of Dillinger.
-
-Once done, run the Docker image and map the port to whatever you wish on your host. In this example, we simply map port 8000 of the host to port 8080 of the Docker (or whatever port was exposed in the Dockerfile):
-
-```sh
-docker run -d -p 8000:8080 --restart="always" <youruser>/dillinger:${package.json.version}
+# Replace privateRepository with your Repository
+$ docker run -p 8080:8080 -e SPRING_PROFILES_ACTIVE=victor privateRepository/broadband-tender-demo
 ```
 
-Verify the deployment by navigating to your server address in your preferred browser.
+Broadband Tender Demo is now available under port 8080
 
-```sh
-127.0.0.1:8000
-```
-
-#### Kubernetes + Google Cloud
-
-See [KUBERNETES.md](https://github.com/joemccann/dillinger/blob/master/KUBERNETES.md)
-
-
+## Architecture Setup
+* parent - contains general server things like security, configuration and system tests
+* tender-model - contains the model for the application (Entitys)
+* tender-service - contains services for the calculation and transformation of masterdata informations
+* tender-seed - contains all items regarding seed dummy test data like price masterdata or projects 
+## Tests
+* Systemtests
+[ServerSecurity](https://github.com/VictorGetz/broadband-tender-demo/blob/master/src/test/java/com/impresssol/broadband/server/security/ServerSecurityConfigTestIT.java) (Validates the acces permissions for the roles KeyAccountManager, Admin and WebserviceUser)
+* Integrationtests
+[Seed](https://github.com/VictorGetz/broadband-tender-demo/blob/master/tender-seed/src/test/java/com/impresssol/broadband/seed/SeedDataFactoryTestIT.java) (Validates all the informations from the seed service)
+* Unittests
+[PriceCalculation](https://github.com/VictorGetz/broadband-tender-demo/blob/master/tender-service/src/test/java/com/impresssol/broadband/service/calculation/PriceCalculationServiceTest.java) (Validates the results from the calculationservice and checks how it behaves with unexpected values)
 ### Todos
 
- - Write MORE Tests
- - Add Night Mode
-
-License
-----
-
-MIT
-
-
-**Free Software, Hell Yeah!**
-
-[//]: # (These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen. Thanks SO - http://stackoverflow.com/questions/4823468/store-comments-in-markdown-syntax)
-
-
-   [dill]: <https://github.com/joemccann/dillinger>
-   [git-repo-url]: <https://github.com/joemccann/dillinger.git>
-   [john gruber]: <http://daringfireball.net>
-   [df1]: <http://daringfireball.net/projects/markdown/>
-   [markdown-it]: <https://github.com/markdown-it/markdown-it>
-   [Ace Editor]: <http://ace.ajax.org>
-   [node.js]: <http://nodejs.org>
-   [Twitter Bootstrap]: <http://twitter.github.com/bootstrap/>
-   [jQuery]: <http://jquery.com>
-   [@tjholowaychuk]: <http://twitter.com/tjholowaychuk>
-   [express]: <http://expressjs.com>
-   [AngularJS]: <http://angularjs.org>
-   [Gulp]: <http://gulpjs.com>
-
-   [PlDb]: <https://github.com/joemccann/dillinger/tree/master/plugins/dropbox/README.md>
-   [PlGh]: <https://github.com/joemccann/dillinger/tree/master/plugins/github/README.md>
-   [PlGd]: <https://github.com/joemccann/dillinger/tree/master/plugins/googledrive/README.md>
-   [PlOd]: <https://github.com/joemccann/dillinger/tree/master/plugins/onedrive/README.md>
-   [PlMe]: <https://github.com/joemccann/dillinger/tree/master/plugins/medium/README.md>
-   [PlGa]: <https://github.com/RahulHP/dillinger/blob/master/plugins/googleanalytics/README.md>
+ - Write More Tests
+ - More Clean Code and Clean Archticture

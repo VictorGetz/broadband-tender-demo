@@ -38,7 +38,6 @@ public class PricingItem {
 	@Enumerated(EnumType.STRING)
 	private PricingItemTypeEnum pricingItemType;
 
-	@Basic
 	@Column
 	@Setter
 	private BigDecimal price;

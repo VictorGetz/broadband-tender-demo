@@ -2,13 +2,14 @@ package com.impresssol.broadband.data.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.MapsId;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.impresssol.broadband.data.entities.pricing.PricingDetailTypeEnum;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -36,5 +37,9 @@ public class ProjectMasterData {
 
 	@Column
 	private String networkOperator;
+
+	@Column
+	@Enumerated(EnumType.STRING)
+	private PricingDetailTypeEnum projectType;
 
 }

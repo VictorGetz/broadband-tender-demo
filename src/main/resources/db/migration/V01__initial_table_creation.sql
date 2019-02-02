@@ -3,8 +3,8 @@ create table contact_person (id bigint not null, name varchar(255) not null, pri
 create table local_authority_district (id bigint not null, district varchar(255), district_key varchar(255), government_district varchar(255), name varchar(255), type varchar(255), contact_person_id bigint, primary key (id));
 create table pricing_detail (id bigint not null, pricing_detail_type varchar(255), primary key (id));
 create table pricing_detail_pricing_items (pricing_detail_id bigint not null, pricing_items_id bigint not null);
-create table pricing_item (id bigint not null, price decimal(19,2), pricing_item_type varchar(255), primary key (id));
-create table pricing_master_data (id bigint not null, sum_value decimal(19,2), primary key (id));
+create table pricing_item (id bigint not null, price numeric(19,2), pricing_item_type varchar(255), primary key (id));
+create table pricing_master_data (id bigint not null, sum_value numeric(19,2), primary key (id));
 create table pricing_master_data_pricing_details (pricing_master_data_id bigint not null, pricing_details_id bigint not null);
 create table project (id bigint not null, local_authority_district_id bigint, pricing_master_data_id bigint, project_master_data_id bigint, primary key (id));
 create table project_master_data (id bigint not null, development_area_name varchar(255), network_operator varchar(255), primary key (id));

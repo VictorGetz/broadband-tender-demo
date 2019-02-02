@@ -24,7 +24,7 @@ repositories {
 
 allprojects {
     group 'com.impresssol.broadband'
-    version '0.0.7-SNAPSHOT'
+    version '1.1-SNAPSHOT'
 
     apply plugin: 'java'
     apply plugin: 'io.spring.dependency-management'
@@ -76,7 +76,7 @@ task buildAndCopyFrontend(type: Exec) {
 
 bootJar.dependsOn(buildAndCopyFrontend)
 
-// Create Docker Image PegasusGasDockerRegistryfrom Dockerfile and the Spring Boot Jar
+// Create Docker Image from Dockerfile and the Spring Boot Jar
 task unpack(type: Copy) {
     dependsOn bootJar
     from(tasks.bootJar.outputs.files.singleFile)

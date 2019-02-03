@@ -1,4 +1,3 @@
-//import api from '../../api'
 import * as _ from "lodash"
 import api from '../../api'
 
@@ -43,6 +42,7 @@ const actions = {
             pricingMasterData: {
                 pricingDetails: [],
                 sumValue: 0,
+                fundingValue: 0,
             },
 
 

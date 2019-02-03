@@ -1,5 +1,21 @@
 import * as _ from 'lodash'
-import {mapGetters} from 'vuex'
+import {mapGetters, mapActions} from 'vuex'
+
+export const categoryMapping = [
+    {internal: 'fttc', external: 'FTTC'},
+    {internal: 'fttb_ftth', external: 'FTTB_FTTH'},
+    {internal: 'cable', external: 'CABLENETWORK'},
+    {internal: 'passiveNetInfrastructure', external: 'PASSIVE_NETWORK_INFRASTRUCTURE'},
+    {internal: 'mobileNetworks', external: 'MOBILE_NETWORK'},
+]
+
+export const productMapping = [
+    {internal: 'accessEmptyPipes', external: 'ACCESS_EMPTY_PIPES'},
+    {internal: 'debundledAccess', external: 'DEBUNDLED_ACCESS'},
+    {internal: 'bitstreamAccess', external: 'BITSTREAM_ACCESS'},
+    {internal: 'accessDarkFiber', external: 'ACCESSDARKFIBER'},
+    {internal: 'backHaulNetworkAccess', external: 'BACKHAULNET_WORKACCESS'},
+]
 
 export default {
 
@@ -50,7 +66,13 @@ export default {
     },
 
     methods: {
+        ...mapActions([
+            'storePricingOptions'
+        ]),
+
         wholesaleProductsToClientFormat() {
+
+            this.resetWholesaleProducts()
             const pricingDetails = this.project.pricingMasterData.pricingDetails
 
             const fttc = _.find(pricingDetails, category => category.pricingDetailType === 'FTTC') || {pricingItems: []}
@@ -72,32 +94,18 @@ export default {
             this.wholesaleProducts.cable.bitstreamAccess = _.find(cableNetwork.pricingItems, item => item.pricingItemType === 'BITSTREAM_ACCESS') !== undefined
 
             this.wholesaleProducts.passiveNetInfrastructure.accessEmptyPipes = _.find(passiveNetworkInfrastructure.pricingItems, item => item.pricingItemType === 'ACCESS_EMPTY_PIPES') !== undefined
-            this.wholesaleProducts.passiveNetInfrastructure.accessDarkFiber = _.find(passiveNetworkInfrastructure.pricingItems, item => item.pricingItemType === 'BITSTREAM_ACCESS') !== undefined
-            this.wholesaleProducts.passiveNetInfrastructure.debundledAccess = _.find(passiveNetworkInfrastructure.pricingItems, item => item.pricingItemType === 'BITSTREAM_ACCESS') !== undefined
+            this.wholesaleProducts.passiveNetInfrastructure.accessDarkFiber = _.find(passiveNetworkInfrastructure.pricingItems, item => item.pricingItemType === 'ACCESSDARKFIBER') !== undefined
+            this.wholesaleProducts.passiveNetInfrastructure.debundledAccess = _.find(passiveNetworkInfrastructure.pricingItems, item => item.pricingItemType === 'DEBUNDLED_ACCESS') !== undefined
 
             this.wholesaleProducts.mobileNetworks.bitstreamAccess = _.find(mobileNetwork.pricingItems, item => item.pricingItemType === 'BITSTREAM_ACCESS') !== undefined
             this.wholesaleProducts.mobileNetworks.sharedUse = _.find(mobileNetwork.pricingItems, item => item.pricingItemType === 'SHARED_USE') !== undefined
             this.wholesaleProducts.mobileNetworks.backHaulNetworkAccess = _.find(mobileNetwork.pricingItems, item => item.pricingItemType === 'BACKHAULNET_WORKACCESS') !== undefined
+
+
+            this.storePricingOptions(this.wholesaleProducts)
         },
 
-
         wholesaleProductsToServerFormat() {
-            const categoryMapping = [
-                {internal: 'fttc', external: 'FTTC'},
-                {internal: 'fttb_ftth', external: 'FTTB_FTTH'},
-                {internal: 'cable', external: 'CABLENETWORK'},
-                {internal: 'passiveNetInfrastructure', external: 'PASSIVE_NETWORK_INFRASTRUCTURE'},
-                {internal: 'mobileNetworks', external: 'MOBILE_NETWORK'},
-            ]
-
-            const productMapping = [
-                {internal: 'accessEmptyPipes', external: 'ACCESS_EMPTY_PIPES'},
-                {internal: 'debundledAccess', external: 'DEBUNDLED_ACCESS'},
-                {internal: 'bitstreamAccess', external: 'BITSTREAM_ACCESS'},
-                {internal: 'accessDarkFiber', external: 'ACCESSDARKFIBER'},
-                {internal: 'backHaulNetworkAccess', external: 'BACKHAULNET_WORKACCESS'},
-            ]
-
             let categories = []
 
             _.each(categoryMapping, category => {

@@ -4,7 +4,8 @@
     <el-button type="primary" @click="$router.push({name: 'project.new'})">Neues Ausbauprojekt</el-button>
     <el-table
             v-loading="loading"
-            :data="projects">
+            :data="projects"
+            empty-text="Keine Projekte vorhanden">
       <el-table-column
               prop="localAuthorityDistrict.name"
               label="Kommune"
@@ -22,15 +23,18 @@
               width="250">
       </el-table-column>
       <el-table-column
-              label="Aktionen">
+              prop="pricingMasterData.sumValue"
+              label="Preis"
+              width="80">
+      </el-table-column>
+      <el-table-column
+              label="Aktionen"
+      width="120">
         <template slot-scope="scope">
-          <el-button
-                  size="mini"
-                  @click="handleEdit(scope.$index, scope.row)">Bearbeiten</el-button>
-          <el-button
-                  size="mini"
-                  type="danger"
-                  @click="handleDelete(scope.$index, scope.row)">Löschen</el-button>
+            <el-button-group>
+                <el-button type="primary" size="mini" icon="el-icon-edit" @click="handleEdit(scope.$index, scope.row)"></el-button>
+                <el-button type="primary" size="mini" icon="el-icon-delete" @click="handleDelete(scope.$index, scope.row)"></el-button>
+            </el-button-group>
         </template>
       </el-table-column>
     </el-table>

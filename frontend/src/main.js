@@ -1,15 +1,18 @@
 import Vue from 'vue'
 import ElementUI from 'element-ui';
-//import 'element-ui/lib/theme-chalk/index.css';
+
 import '@/scss/element.scss'
 import App from './App.vue'
 import router from './router'
 import store from './store/'
 import api from './mixins/api'
+import euros from './filters/euros'
 
 Vue.config.productionTip = false
 
 Vue.mixin(api)
+
+Vue.filter('euros', euros)
 
 Vue.use(ElementUI);
 

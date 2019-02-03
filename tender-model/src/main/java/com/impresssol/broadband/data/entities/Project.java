@@ -1,7 +1,6 @@
 package com.impresssol.broadband.data.entities;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -38,7 +37,7 @@ public class Project {
 	@OneToOne(cascade = CascadeType.ALL)
 	private ProjectMasterData projectMasterData;
 
-	@OneToOne(cascade = CascadeType.PERSIST)
+	@OneToOne(cascade = CascadeType.ALL)
 	private LocalAuthorityDistrict localAuthorityDistrict;
 
 	@OneToOne(cascade = CascadeType.ALL)

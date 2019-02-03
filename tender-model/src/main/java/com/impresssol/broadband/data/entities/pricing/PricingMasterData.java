@@ -14,8 +14,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -40,5 +38,9 @@ public class PricingMasterData {
 	@Column
 	@Setter
 	private BigDecimal sumValue;
+
+	@Column
+	@Setter
+	private BigDecimal fundingValue;
 
 }

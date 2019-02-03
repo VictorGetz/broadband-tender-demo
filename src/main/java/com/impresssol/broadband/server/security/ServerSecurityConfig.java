@@ -1,7 +1,6 @@
 package com.impresssol.broadband.server.security;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -53,8 +52,8 @@ public class ServerSecurityConfig extends WebSecurityConfigurerAdapter {
 				.roles(mapToNames(serverCredentials.getKamRoles()));
 	}
 
-	private String mapToNames(List<ServerRole> roles) {
-		return roles.stream().map(Enum::name).collect(Collectors.joining());
+	private String[] mapToNames(List<ServerRole> roles) {
+		return roles.stream().map(Enum::name).toArray(String[]::new);
 	}
 
 	@Bean

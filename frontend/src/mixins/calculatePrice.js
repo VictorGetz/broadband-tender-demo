@@ -22,8 +22,6 @@ export default {
                 })
             })
 
-            console.log('calculatePrice', price, this.pricingOptions)
-
             return price
         }
     }

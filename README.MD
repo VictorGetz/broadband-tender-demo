@@ -11,21 +11,21 @@ Develop a Spring Boot Demo Application within a day.
 * WebserviceUser (is allowed to access the api)
 * Key Account Manager (is allowed to access the UI)
 # Endpoints
-* https://tender-demo.azurewebsites.net/ (Key Account Manager Access required)
+* http://tender-demo.azurewebsites.net/ (Key Account Manager Access required)
 * Interface Endpoints
     * Creating Dummy Entries via REST Interface
-        * [Project](https://tender-demo.azurewebsites.net/api/seed/projects)
-        * [Prices](https://tender-demo.azurewebsites.net/api/seed/prices)
+        * [Project](http://tender-demo.azurewebsites.net/api/seed/projects)
+        * [Prices](http://tender-demo.azurewebsites.net/api/seed/prices)
     * Access General Data via REST
-        * [All Projects](https://tender-demo.azurewebsites.net/api/projects)
-        * [HAL Browser](https://tender-demo.azurewebsites.net/api/repositories/browser/index.html#/api/repositories)
+        * [All Projects](http://tender-demo.azurewebsites.net/api/projects)
+        * [HAL Browser](http://tender-demo.azurewebsites.net/api/repositories/browser/index.html#/api/repositories)
     * Access Project Data via REST
-        * Create, Read, Update, Delete Operations (https://tender-demo.azurewebsites.net/api/projects)
-        * Specific project https://tender-demo.azurewebsites.net/api/projects/$projectId (for example 23)
+        * Create, Read, Update, Delete Operations (http://tender-demo.azurewebsites.net/api/projects)
+        * Specific project http://tender-demo.azurewebsites.net/api/projects/$projectId (for example 23)
     * Access Pricing Data via REST 
-        * [Get Current Prices](https://tender-demo.azurewebsites.net/api/masterdata/pricing)
-        * Calculate prices for specific project https://tender-demo.azurewebsites.net/api/pricingMasterData/calculateAndUpdateSum/$projectId (for example 23)
-        * Update prices for all project with masterdata https://tender-demo.azurewebsites.net/api/masterdata/pricing (Post Request)
+        * [Get Current Prices](http://tender-demo.azurewebsites.net/api/masterdata/pricing)
+        * Calculate prices for specific project http://tender-demo.azurewebsites.net/api/pricingMasterData/calculateAndUpdateSum/$projectId (for example 23)
+        * Update prices for all project with masterdata http://tender-demo.azurewebsites.net/api/masterdata/pricing (Post Request)
             *   ```json
                     {
                       "ACCESS_EMPTY_PIPES": 1080,
@@ -37,11 +37,11 @@ Develop a Spring Boot Demo Application within a day.
                     }
                 ```
 * Admin Endpoints
-    * [Show Logs](https://tender-demo.azurewebsites.net/actuator/logfile)
-    * [See if the application is available](https://tender-demo.azurewebsites.net/actuator/health)
-    * [See detailed information about past HTTP connections](https://tender-demo.azurewebsites.net/actuator/httptrace)
-    * [See server configuration](https://tender-demo.azurewebsites.net/actuator/configprops)
-    * [Details about Database Migrations](https://tender-demo.azurewebsites.net/actuator/flyway)
+    * [Show Logs](http://tender-demo.azurewebsites.net/actuator/logfile)
+    * [See if the application is available](http://tender-demo.azurewebsites.net/actuator/health)
+    * [See detailed information about past HTTP connections](http://tender-demo.azurewebsites.net/actuator/httptrace)
+    * [See server configuration](http://tender-demo.azurewebsites.net/actuator/configprops)
+    * [Details about Database Migrations](http://tender-demo.azurewebsites.net/actuator/flyway)
     * ...
 ### Tech Stack
 

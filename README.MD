@@ -2,10 +2,23 @@
 
 [![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
 
-TODO
+The broadband tender demo application was developed during a weekend hackathon to provide an insight into code base, architecture approach and project setup for the Deutsche Telekom. 
+
+This application is not run or developed by the Deutsche Telekom !
 
 # Goal
-Develop a Spring Boot Demo Application within a day.
+
+The primary purpose of this demo, is to showcase a well structured and organized test scenario with the following aspects in mind:
+
+- Providing a REST API
+- Built in Role Managment
+- Process flow for Creating, Reading, Writing and Deleting broadband tenders 
+- Log File Managment
+- Health Status Endpoint for system monitoring
+- Seed data generation to provide a initial demo set of data
+- Responsive and reactive UI 
+- Easy deployment via a Docker Container on MS Azure 
+- Thorough test coverage via Unit- & Integrationtests
 # Roles
 * Admin (is allowed to access everything and to configure the server)
 * WebserviceUser (is allowed to access the api)
@@ -23,9 +36,9 @@ Develop a Spring Boot Demo Application within a day.
         * Create, Read, Update, Delete Operations (http://tender-demo.azurewebsites.net/api/projects)
         * Specific project http://tender-demo.azurewebsites.net/api/projects/$projectId (for example 23)
     * Access Pricing Data via REST 
-        * [Get Current Prices](http://tender-demo.azurewebsites.net/api/masterdata/pricing)
-        * Calculate prices for specific project http://tender-demo.azurewebsites.net/api/pricingMasterData/calculateAndUpdateSum/$projectId (for example 23)
-        * Update prices for all project with masterdata http://tender-demo.azurewebsites.net/api/masterdata/pricing (Post Request)
+        * [Get Current Prices](http://localhost:8080/api/masterdata/pricing)
+        * Calculate prices for specific project http://localhost:8080/api/pricingMasterData/calculateAndUpdateSum/$projectId (for example 23)
+        * Update prices for all project with masterdata http://localhost:8080/api/masterdata/pricing (Post Request)
             *   ```json
                     {
                       "ACCESS_EMPTY_PIPES": 1080,
@@ -38,10 +51,10 @@ Develop a Spring Boot Demo Application within a day.
                 ```
 * Admin Endpoints
     * [Show Logs](http://tender-demo.azurewebsites.net/actuator/logfile)
-    * [See if the application is available](http://tender-demo.azurewebsites.net/actuator/health)
-    * [See detailed information about past HTTP connections](http://tender-demo.azurewebsites.net/actuator/httptrace)
-    * [See server configuration](http://tender-demo.azurewebsites.net/actuator/configprops)
-    * [Details about Database Migrations](http://tender-demo.azurewebsites.net/actuator/flyway)
+    * [See if the application is available](https://tender-demo.azurewebsites.net/actuator/health)
+    * [See detailed information about past HTTP connections](https://tender-demo.azurewebsites.net/actuator/httptrace)
+    * [See server configuration](https://tender-demo.azurewebsites.net/actuator/configprops)
+    * [Details about Database Migrations](https://tender-demo.azurewebsites.net/actuator/flyway)
     * ...
 ### Tech Stack
 

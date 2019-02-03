@@ -1,5 +1,8 @@
 package com.impresssol.broadband.server.security;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -25,9 +28,9 @@ public class ServerSecurityConfig extends WebSecurityConfigurerAdapter {
 				.csrf().disable()
 				.authorizeRequests()
 				.antMatchers("/actuator/health").permitAll()
-				.antMatchers("/actuator/*").hasRole(ServerRole.ADMIN_ROLE.toString())
-				.antMatchers("/api/*").hasRole(ServerRole.WEBSERVICE_ROLE.toString())
-				.antMatchers("/*").hasRole(ServerRole.KAM.toString())
+				.antMatchers("/actuator/*").hasRole(ServerRole.ADMIN_ROLE.name())
+				.antMatchers("/api/*").hasRole(ServerRole.WEBSERVICE_ROLE.name())
+				.antMatchers("/*").hasRole(ServerRole.KAM.name())
 				.anyRequest().authenticated()
 				.and()
 				.httpBasic();
@@ -39,15 +42,19 @@ public class ServerSecurityConfig extends WebSecurityConfigurerAdapter {
 				.passwordEncoder(passwordEncoder())
 				.withUser(serverCredentials.getAdminName())
 				.password(passwordEncoder().encode(serverCredentials.getAdminPassword()))
-				.roles(ServerRole.WEBSERVICE_ROLE.toString(), ServerRole.ADMIN_ROLE.toString())
+				.roles(mapToNames(serverCredentials.getAdminRoles()))
 				.and()
 				.withUser(serverCredentials.getWebserviceName())
 				.password(passwordEncoder().encode(serverCredentials.getWebservicePassword()))
-				.roles(ServerRole.WEBSERVICE_ROLE.toString())
+				.roles(mapToNames(serverCredentials.getWebserviceRoles()))
 				.and()
 				.withUser(serverCredentials.getKamName())
 				.password(passwordEncoder().encode(serverCredentials.getKamPassword()))
-				.roles(ServerRole.KAM.toString());
+				.roles(mapToNames(serverCredentials.getKamRoles()));
+	}
+
+	private String mapToNames(List<ServerRole> roles) {
+		return roles.stream().map(Enum::name).collect(Collectors.joining());
 	}
 
 	@Bean

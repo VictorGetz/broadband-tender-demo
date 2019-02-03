@@ -2,7 +2,6 @@ package com.impresssol.broadband.server.security;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
@@ -22,10 +21,10 @@ public class ServerCredentials {
 
 	String webserviceName;
 	String webservicePassword;
-	List<ServerRole> webserviceRole = Arrays.asList(ServerRole.WEBSERVICE_ROLE);
+	List<ServerRole> webserviceRoles = Arrays.asList(ServerRole.WEBSERVICE_ROLE);
 
 
 	String kamName;
 	String kamPassword;
-	List<ServerRole> kamRole = Arrays.asList(ServerRole.KAM);
+	List<ServerRole> kamRoles = Arrays.asList(ServerRole.KAM);
 }

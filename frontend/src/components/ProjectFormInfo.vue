@@ -57,7 +57,7 @@
             </el-form-item>
 
             <el-form-item label="Förderbetrag (gem. Zuwendungsbescheid)">
-                <el-input v-model="projectLocal.pricingMasterData.fundingValue" placeholder="0,00" v-mask="'##########'"></el-input>
+                <el-input v-model="projectLocal.pricingMasterData.fundingValue" @input="onChangeOption" placeholder="0,00" v-mask="'##########'"></el-input>
             </el-form-item>
 
             <el-form-item label="Beihilfeintensität (staatliche und kommunale Mittel)" v-if="totalPrice">
@@ -156,7 +156,14 @@
             ]),
 
             fundingPercentage() {
-                return Math.round(100 * this.projectLocal.pricingMasterData.fundingValue / this.totalPrice)
+                let percentage = Math.round(100 * this.projectLocal.pricingMasterData.fundingValue / this.totalPrice)
+                if (isNaN(percentage)) {
+                    percentage = 0
+                } else if(percentage > 100) {
+                    percentage = 100
+                }
+
+                return percentage
             },
 
             isFttc() {

@@ -142,3 +142,6 @@ Broadband Tender Demo is now available under port 8080
 
  - Write More Tests
  - More Clean Code and Clean Archticture
+ - Jira Tickets
+ - Commit Messages with Jira Ticket Numbers
+ - ...

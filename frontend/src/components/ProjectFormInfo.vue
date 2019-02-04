@@ -126,7 +126,7 @@
                     pricingMasterData: {
                         id: this.projectLocal.pricingMasterData.id,
                         pricingDetails: this.wholesaleProductsToServerFormat(),
-                        sumValue: this.projectLocal.pricingMasterData.sumValue,
+                        sumValue: this.totalPrice,
                         fundingValue: this.projectLocal.pricingMasterData.fundingValue,
                     },
                     projectMasterData: this.projectLocal.projectMasterData,
